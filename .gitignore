@@ -1,0 +1,11 @@
+# Assignment documents
+*.docx
+*.pdf
+
+# Build outputs
+target/
+node_modules/
+
+# IDE
+.idea/
+.vscode/
