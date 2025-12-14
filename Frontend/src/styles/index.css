@@ -1,0 +1,374 @@
+/* * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #2c3e50;
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-link.active {
+    font-weight: bold;
+}
+
+/* TaskList Grid */
+.tasklist-page {
+    padding: 2rem;
+}
+
+.tasklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.tasklist-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.tasklist-card:hover {
+    transform: translateY(-2px);
+}
+
+/* Kanban Board */
+.kanban-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.kanban-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.back-button {
+    padding: 0.5rem 1rem;
+    background: #eee;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-task-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.add-task-form input {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 300px;
+}
+
+.add-task-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.kanban-column {
+    background: white;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    min-height: 300px;
+}
+
+.kanban-column h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #333;
+}
+
+.kanban-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.task-card {
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 0.75rem;
+}
+
+.no-tasks {
+    color: #999;
+    text-align: center;
+    font-style: italic;
+}
+
+.archived-column {
+    margin-top: 1rem;
+}
+
+/* Home */
+.home-container {
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.logged-in-status {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+/* 
+list style types : 
+ul.a {list-style-type: circle;}
+ul.b {list-style-type: square;}
+ol.c {list-style-type: upper-roman;}
+ol.d {list-style-type: lower-alpha;}
+*/
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+} */
+
+/* ===== NAVBAR ===== */
+/* .navbar {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem;
+  background-color: #1a1a2e;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+.nav-link:hover {
+  background-color: #16213e;
+  border-radius: 4px;
+}
+
+/* ===== TODO CONTAINER (box for cards) ===== */
+.todo-container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.todo-container h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+} */
+
+/* ===== INPUT SECTION ===== */
+/* .todo-input {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.todo-input input {
+  width: 300px;
+  padding: 0.75rem 1rem;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.add-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.add-button:hover {
+  background-color: #43a047;
+} */
+
+/* ===== BOARD - 3 EQUAL COLUMNS ===== */
+/* .board {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* ===== COLUMN ===== */
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.columnTitle {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #333;
+}
+
+.columnActionBar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  background-color: #e0e0e0;
+  border-radius: 6px;
+}
+
+.columnSelect {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.columnButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.columnButton {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.columnButton:hover {
+  background-color: #f0f0f0;
+}
+
+.columnButtonDelete {
+  background-color: #ffcdd2;
+  border-color: #f44336;
+}
+
+.columnButtonDelete:hover {
+  background-color: #ef9a9a;
+}
+
+.columnButtonArchive {
+  background-color: #fff3e0;
+  border-color: #ff9800;
+}
+
+.columnButtonArchive:hover {
+  background-color: #ffe0b2;
+} */
+
+/* ===== CARD ===== */
+/* .card {
+  flex: 1;
+  background-color: #fafafa;
+  border: 2px solid #000;
+  border-radius: 8px;
+  padding: 1rem;
+  min-height: 200px;
+}
+
+.cardEmpty {
+  color: #888;
+  font-style: italic;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.cardList {
+  list-style: none;
+}
+
+.cardItem {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.cardText {
+  font-size: 1rem;
+  color: #333;
+} */
+
+/* ===== ARCHIVED BANNER ===== */
+/* .archived-banner {
+  margin-top: 1rem;
+}
+
+.archived-banner .columnTitle {
+  border-bottom-color: #999;
+  color: #666;
+}
+
+.archived-banner .card {
+  border: 2px dashed #999;
+  background-color: #f5f5f5;
+  min-height: 100px;
+}
+
+.archived-banner .cardItem {
+  background-color: #eee;
+  border-color: #ccc;
+}
+
+.archived-banner .cardText {
+  color: #666;
+} */ */
