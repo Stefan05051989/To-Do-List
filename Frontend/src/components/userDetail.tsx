@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useUser } from "../stores/userStore";
 import { API_URL } from "../App";
-import type { ToDoUserSummaryDTO } from "../types/models.d";
+import type { UserSummaryDTO } from "../types/models.d";  // ✅ Fix type naam
 
 const UserDetail = () => {
     const user = useUser();
@@ -10,7 +10,7 @@ const UserDetail = () => {
         data: userDetail,
         isLoading,
         error,
-    } = useQuery<ToDoUserSummaryDTO>({
+    } = useQuery<UserSummaryDTO>({
         queryKey: ["user", user.id],
         queryFn: async () => {
             const response = await fetch(`${API_URL}/users/${user.id}`);
@@ -23,29 +23,33 @@ const UserDetail = () => {
     });
 
     if (!user.id || isNaN(user.id)) {
-        return <div>Sign in to see your profile.</div>;
+        return <div>Log in om je profiel te zien.</div>;
     }
 
-    if (error) {
-        return <div >Error : {error.message}</div>;
-    }
-
-    if (isLoading || userDetail == undefined) {
+    if (isLoading) {
         return <div>Loading...</div>;
     }
 
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    if (!userDetail) {
+        return <div>Geen gebruiker gevonden.</div>;
+    }
+
     return (
-        <>
+        <div className="user-detail">
             <div>
-                <h3>First name :  <p>{userDetail.firstName}</p></h3>
+                <strong>Voornaam:</strong> {userDetail.firstName}
             </div>
             <div>
-                <h3>Last name : <p>{userDetail.lastName}</p></h3>
+                <strong>Achternaam:</strong> {userDetail.lastName}
             </div>
             <div>
-                <h3>E-mail : <p>{userDetail.email}</p></h3>
+                <strong>E-mail:</strong> {userDetail.email}
             </div>
-        </>
+        </div>
     );
 };
 
