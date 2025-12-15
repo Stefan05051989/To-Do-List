@@ -2,7 +2,7 @@ import { useState } from "react";
 import UserCreate from "./userCreate";
 import { logout, updateUser } from "../stores/userStore";
 import { API_URL } from "../App";
-import type { UserSummaryDTO } from "../types/models.d";
+import type { ToDoUserSummaryDTO } from "../types/models.d";
 
 const UserLogin = () => {
     const [makingAccount, setMakingAccount] = useState<number>(0);
@@ -20,7 +20,7 @@ const UserLogin = () => {
             return;
         }
 
-        const users: UserSummaryDTO[] = await response.json();
+        const users: ToDoUserSummaryDTO[] = await response.json();
         const loginUser = users.find((u) => u.email === state.email);
 
         if (!loginUser) {
@@ -50,7 +50,7 @@ const UserLogin = () => {
             <h3>Login</h3>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label style={{ color: "black" }} htmlFor="email">
+                    <label style={{ color: "red" }} htmlFor="email">
                         Email:
                     </label>
                     <input
@@ -70,7 +70,6 @@ const UserLogin = () => {
                     Logout
                 </button>
             </form>
-            <hr />
             <p>
                 Nog geen account?{" "}
                 <button onClick={() => setMakingAccount(1)}>Maak een account</button>

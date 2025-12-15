@@ -1,4 +1,4 @@
-import UserDetail from "../components/userDetail"
+// import UserDetail from "../components/user.tsx/userDetail"
 
 const UserPage = () => {
     return (

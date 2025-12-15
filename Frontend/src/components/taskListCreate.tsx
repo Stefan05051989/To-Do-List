@@ -14,7 +14,7 @@ const TaskListCreate = () => {
         mutationFn: async (taskList: TaskListCreateDTO) => {
             const data = { title: taskList.title, userId: user.id};
 
-            const response = await fetch(`${API_URL}/tasklists`, {
+            const response = await fetch(`${API_URL}/tasklist`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
