@@ -1,4 +1,3 @@
-import TaskListCreate from "../components/taskListCreate";
 import UserLogin from "../components/userLogin";
 import { useUser } from "../stores/userStore";
 
@@ -13,10 +12,9 @@ const HomePage = () => {
             ) : (
                 <p className="logged-in-status">Niet ingelogd</p>
             )}
-            <h1>Home</h1>
+            <strong>Home</strong>
             <UserLogin />
-            <hr />
-            <TaskListCreate />
+            {/* <hr /> */}
         </div>
     );
 };
