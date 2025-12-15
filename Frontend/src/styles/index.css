@@ -1,4 +1,4 @@
-/* * {
+body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -52,13 +52,13 @@ body {
 }
 
 /* Kanban Board */
-.kanban-container {
+.board-container {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.kanban-header {
+.board-header {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -96,13 +96,13 @@ body {
     cursor: pointer;
 }
 
-.kanban-board {
+.board-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
 }
 
-.kanban-column {
+.board-column {
     background: white;
     border: 2px dashed #ddd;
     border-radius: 8px;
@@ -110,14 +110,14 @@ body {
     min-height: 300px;
 }
 
-.kanban-column h2 {
+.board-column h2 {
     text-align: center;
     margin-bottom: 1rem;
     font-size: 1rem;
     color: #333;
 }
 
-.kanban-tasks {
+.board-tasks {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -159,7 +159,7 @@ ul.b {list-style-type: square;}
 ol.c {list-style-type: upper-roman;}
 ol.d {list-style-type: lower-alpha;}
 */
-/* * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -171,7 +171,7 @@ body {
 } */
 
 /* ===== NAVBAR ===== */
-/* .navbar {
+.navbar {
   display: flex;
   justify-content: center;
   gap: 2rem;
@@ -206,7 +206,7 @@ body {
 } */
 
 /* ===== INPUT SECTION ===== */
-/* .todo-input {
+ .todo-input {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
@@ -233,10 +233,10 @@ body {
 
 .add-button:hover {
   background-color: #43a047;
-} */
+} 
 
 /* ===== BOARD - 3 EQUAL COLUMNS ===== */
-/* .board {
+.board {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1.5rem;
@@ -315,7 +315,7 @@ body {
 } */
 
 /* ===== CARD ===== */
-/* .card {
+.card {
   flex: 1;
   background-color: #fafafa;
   border: 2px solid #000;
@@ -349,7 +349,7 @@ body {
 } */
 
 /* ===== ARCHIVED BANNER ===== */
-/* .archived-banner {
+ .archived-banner {
   margin-top: 1rem;
 }
 
@@ -371,4 +371,52 @@ body {
 
 .archived-banner .cardText {
   color: #666;
-} */ */
+} 
+
+BoardTaskcss voor drag en drop */
+/* .board {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 16px;
+}
+
+.board-column {
+    flex: 1;
+    min-width: 250px;
+    background-color: #f4f5f7;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.board-tasks {
+    min-height: 100px;
+    transition: background-color 0.2s;
+}
+
+.task-card {
+    background: white;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    cursor: grab;
+}
+
+.task-card:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.task-card:active {
+    cursor: grabbing;
+}
+
+.column-over {
+    background-color: #e3f2fd !important;
+}
+
+.no-tasks {
+    color: #999;
+    text-align: center;
+    font-style: italic;
+}

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import type { TaskCreateDTO } from "../models.d.ts/models.tsx";
+import type { TaskCreateDTO } from "../types/models.d";
 import { API_URL } from "../App";
 
 interface TaskCreateProps {
@@ -14,7 +14,7 @@ const TaskCreate = ({ setPlacingTask, taskListId }: TaskCreateProps) => {
 
     const createTask = useMutation({
         mutationFn: async (task: TaskCreateDTO) => {
-            const response = await fetch(`${API_URL}/tasks/new-task`, {
+            const response = await fetch(`${API_URL}/task`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(task),
@@ -36,6 +36,8 @@ const TaskCreate = ({ setPlacingTask, taskListId }: TaskCreateProps) => {
             title: task.title,
             content: task.content,
             taskListId: taskListId,
+            // status vergeten!!
+            status: "CREATED",
         });
         console.log("Task Submitted " + task.title);
     };
