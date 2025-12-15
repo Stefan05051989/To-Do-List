@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { API_URL } from "../App";
-import type { ToDoUserCreateDTO } from "../types/models.d";
+import type { UserCreateDTO } from "../types/models.d";
 import { useState } from "react";
 
 interface UserCreateProps {
@@ -9,7 +9,7 @@ interface UserCreateProps {
 
 const UserCreate = ({ setMakingAccount }: UserCreateProps) => {
     const queryClient = useQueryClient();
-    const [state, setState] = useState<ToDoUserCreateDTO>({
+    const [state, setState] = useState<UserCreateDTO>({
         firstName: "",
         lastName: "",
         email: "",
@@ -17,7 +17,7 @@ const UserCreate = ({ setMakingAccount }: UserCreateProps) => {
     });
 
     const createUser = useMutation({
-        mutationFn: async (user: ToDoUserCreateDTO) => {
+        mutationFn: async (user: UserCreateDTO) => {
             const response = await fetch(`${API_URL}/users`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
