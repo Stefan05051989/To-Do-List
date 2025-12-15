@@ -21,4 +21,3 @@ export interface ColumnConfiguration{
     status: TaskStatusType;
     label : string;
 }
-
