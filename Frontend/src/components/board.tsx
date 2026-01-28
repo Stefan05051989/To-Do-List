@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { API_URL } from "../App";
-import type { TaskSummaryDTO, TaskCreateDTO, TaskUpdateDTO, Status } from "../types/models.d";
+import type { TaskSummaryDTO, TaskCreateDTO, TaskUpdateDTO, Status, BoardProps } from "../types/models.d";
 import {DndContext,type DragEndEvent ,DragOverlay, type DragStartEvent, PointerSensor, useSensor, useSensors, closestCorners} from "@dnd-kit/core";
 import Column from "../components/TaskColumnDroppable";
 import TaskCard from "./TaskCard";
-import type { BoardProps } from "../types/models.d"
+
 
 const COLUMNS: { status: Status; title: string }[] = [
     { status: "CREATED", title: "Created" },
@@ -27,7 +27,7 @@ const Board = ({ taskListId, taskListTitle, onBack }: BoardProps) => {
         })
     );
 
-    // Fetch tasks
+    // Fetch tasks -> ophalen via queryKey / queryFn
     const { data: tasks, isLoading } = useQuery<TaskSummaryDTO[]>({
         queryKey: ["tasks", taskListId],
         queryFn: async () => {
@@ -97,6 +97,7 @@ const updateTask = useMutation({
         });
     };
 
+    // filter by status -> DTO heeft nieuwe status erbij voor dragendrop, let op : newStatus
     const filterByStatus = (status: Status) => {
         return tasks?.filter((task) => task.status === status) || [];
     };
@@ -107,11 +108,12 @@ const updateTask = useMutation({
         if (task) setActiveTask(task);
     };
 
+    // handle drag met event
     const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    
+    // check waar drag uitkomt -> draggen kon wel, maar droppen was niet mogelijk.
     console.log("Drag ended:", { active: active.id, over: over?.id });
-    
+    // reset zodat elke drag en drop opnieuw begint!!!
     setActiveTask(null);
 
     if (!over) {
@@ -121,10 +123,8 @@ const updateTask = useMutation({
 
     const taskId = active.id as number;
     const overId = over.id;
-
-    // Check of over.id een kolom status is
     const isColumn = COLUMNS.some((col) => col.status === overId);
-    
+    // nieuwe status na slepen.
     let newStatus: Status;
     
     if (isColumn) {
@@ -147,7 +147,7 @@ const updateTask = useMutation({
         console.log("Task not found or same status");
         return;
     }
-
+    // log voor updating task naar -> 
     console.log("Updating task to:", newStatus);
     
     updateTask.mutate({
@@ -167,7 +167,7 @@ const updateTask = useMutation({
             <div className="board-header">
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
                     <button className="back-button" onClick={onBack}>
-                        ← Terug
+                        Terug
                     </button>
                     <button
                         className="columnButtonDelete"

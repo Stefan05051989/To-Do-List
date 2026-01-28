@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { API_URL } from "../App";
-import type { ToDoUserSummaryDTO } from "../types/models";
+import { ToDoUserSummaryDTO } from "../types/models.ts";
 
 const UserList = () => {
     const {

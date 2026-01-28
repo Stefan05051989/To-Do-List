@@ -1,4 +1,4 @@
-/* .board {
+.board {
     display: flex;
     gap: 16px;
     overflow-x: auto;
@@ -43,4 +43,4 @@
     color: #999;
     text-align: center;
     font-style: italic;
-} */
+}
