@@ -3,6 +3,8 @@ Stefan Kiers
 Model definitions
 */
 
+import type { TaskStatusType } from "./types.d";
+
 // Status Enum 
 export type Status = "CREATED" | "IN_PROGRESS" | "DONE" | "TESTING" | "ARCHIVED" | "MIGRATED";
 
@@ -76,9 +78,6 @@ export interface TaskListDetailProps {
 }
 
 
-export interface TaskCardProps {
-    task: TaskSummaryDTO;
-}
 export interface ColumnProps {
     status: Status;
     title: string;
@@ -89,4 +88,22 @@ export interface BoardProps {
     taskListId: number;
     taskListTitle: string;
     onBack: () => void;
+}
+
+// geef TST mee in interface, roep aan in interface en geef mee als waarde.
+export interface StatusTransition {
+    value: TaskStatusType; 
+    label: string;
+}
+
+export interface ColumnConfiguration{
+    status: TaskStatusType;
+    label : string;
+}
+
+export interface TaskCardProps {
+  task: TaskSummaryDTO;
+  onEdit?: (task: TaskSummaryDTO) => void;
+  onDelete?: (taskId: number) => void;
+  onStatusChange?: (taskId: number, completed: boolean) => void;
 }

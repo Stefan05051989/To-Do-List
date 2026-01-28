@@ -1,9 +1,8 @@
 /*
 Stefan Kiers
-Type definitions
+*/
 
-Types and models can't be in the same files cause then they don't render properly.
-*/ 
+import type { Status } from "./models.d";
 
 // types for status
 export type TaskStatusType = "created" | "inProgress" | "done" | "archived" | "deleted";
@@ -11,14 +10,23 @@ export type TaskStatusType = "created" | "inProgress" | "done" | "archived" | "d
 // filter type : 
 export type FilterType = "all" | "done";
 
-// geef TST mee in interface, roep aan in interface en geef mee als waarde.
-export interface StatusTransition {
-    value: TaskStatusType; 
-    label: string;
+export type Task ={
+    id: number;
+    title: string;
+    content?: string;
+    status: Status;
+    taskListId: number;
 }
 
-export interface ColumnConfiguration{
-    status: TaskStatusType;
-    label : string;
+export type TaskCardProps = {
+    task: {
+        task: Task,
+        id: string | number; 
+        title: string; 
+        content?: string};
+        onClick: (task: unknown) => void;
+        onEdit?: (task: Task) => void;
+        onDelete?: (taskId: number) => void;
+        onStatusChange?: (taskId: number, completed: boolean) => void;
 }
 
