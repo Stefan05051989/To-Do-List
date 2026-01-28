@@ -5,6 +5,7 @@ import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.TaskCreateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.TaskSummaryDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.TaskUpdateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.services.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +44,8 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TaskSummaryDTO> update(@PathVariable Long id, @RequestBody TaskUpdateDTO dto) {
-        return ResponseEntity.ok(taskService.update(id, dto));
+    public ResponseEntity<TaskSummaryDTO> update(@PathVariable Long id, @Valid @RequestBody TaskUpdateDTO dto) {
+        return ResponseEntity.ok(taskService.updateTask(id, dto));
     }
 
     @DeleteMapping("/{id}")

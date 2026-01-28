@@ -66,7 +66,7 @@ public class TaskListController {
 //        | **TaskListSummaryDTO** | id, title |
 //        | **TaskListUpdateDTO** | title |
 //        | **TaskListMapper** | `toEntity()`, `updateEntity()`, `toTaskListSummaryDTO()`, `toTaskListSummaryDTOList()` |
-//        | **TaskListService** | `create()`, `getAll()`, `getById()`, `getByUserId()`, `update()`, `delete()` |
+//        | **TaskListService** | `create()`, `getAll()`, `getById()`, `getByUserId()`, `updateTask()`, `delete()` |
 //        | **TaskListController** | POST, GET, GET/{id}, GET/user/{userId}, PUT/{id}, DELETE/{id} |
 //
 //        ---
