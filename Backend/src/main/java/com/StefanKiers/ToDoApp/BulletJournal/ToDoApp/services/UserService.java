@@ -12,6 +12,7 @@ import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.mapper.UserMapper;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.models.User;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,17 +23,20 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public UserSummaryDTO create(UserCreateDTO userCreateDTO) {
+    public UserSummaryDTO createUser(UserCreateDTO userCreateDTO) {
         if (userRepository.existsByEmail(userCreateDTO.email())) {
             throw new DuplicateEmailException("Email already exists");
         }
         User user = userMapper.toUserEntity(userCreateDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userMapper.toUserSummaryDTO(userRepository.save(user));
     }
 
@@ -65,7 +69,7 @@ public class UserService {
         User user = userRepository.findByEmail(dto.email())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        if (!user.getPassword().equals(dto.currentPassword())) {
+        if (!passwordEncoder.matches(dto.currentPassword(), user.getPassword())) {
             throw new IncorrectPasswordException("Current password is incorrect");
         }
 
@@ -73,7 +77,20 @@ public class UserService {
             throw new SamePasswordException("New password cannot be the same as current password");
         }
 
-        user.setPassword(dto.newPassword());
+        user.setPassword(passwordEncoder.encode(dto.newPassword()));
         return userMapper.toUserSummaryDTO(userRepository.save(user));
+//        User user = userRepository.findByEmail(dto.email())
+//                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+//
+//        if (!user.getPassword().equals(dto.currentPassword())) {
+//            throw new IncorrectPasswordException("Current password is incorrect");
+//        }
+//
+//        if (dto.currentPassword().equals(dto.newPassword())) {
+//            throw new SamePasswordException("New password cannot be the same as current password");
+//        }
+//
+//        user.setPassword(dto.newPassword());
+//        return userMapper.toUserSummaryDTO(userRepository.save(user));
     }
 }

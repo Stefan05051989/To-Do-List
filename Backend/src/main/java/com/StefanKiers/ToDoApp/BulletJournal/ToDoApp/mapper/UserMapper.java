@@ -1,11 +1,9 @@
 package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.mapper;
-
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.user.UserCreateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.user.UserSummaryDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.user.UserUpdateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.models.User;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Component

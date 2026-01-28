@@ -44,11 +44,12 @@ public class TaskService {
         return taskMapper.toTaskSummaryDTOList(taskRepository.findByTaskListId(taskListId));
     }
 
-    public TaskSummaryDTO update(Long id, TaskUpdateDTO dto) {
+    public TaskSummaryDTO updateTask(Long id, TaskUpdateDTO dto) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
         taskMapper.updateEntity(task, dto);
-        return taskMapper.toTaskSummaryDTO(taskRepository.save(task));
+        Task saved = taskRepository.save(task);
+        return taskMapper.toTaskSummaryDTO(taskRepository.save( saved));
     }
 
     public void delete(Long id) {
