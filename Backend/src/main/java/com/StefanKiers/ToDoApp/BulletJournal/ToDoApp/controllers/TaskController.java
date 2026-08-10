@@ -1,9 +1,7 @@
 // controllers/TaskController.java
 package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.controllers;
 
-import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.TaskCreateDTO;
-import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.TaskSummaryDTO;
-import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.TaskUpdateDTO;
+import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.*;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.services.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -44,7 +42,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TaskSummaryDTO> update(@PathVariable Long id, @Valid @RequestBody TaskUpdateDTO dto) {
+    public ResponseEntity<TaskSummaryDTO> updateTask(@PathVariable Long id, @Valid @RequestBody TaskUpdateDTO dto) {
         return ResponseEntity.ok(taskService.updateTask(id, dto));
     }
 
@@ -53,4 +51,14 @@ public class TaskController {
         taskService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<TaskSummaryDTO> updateStatus(@PathVariable Long id, @RequestBody StatusUpdateDTO statusUpdateDTO) {
+        return ResponseEntity.ok(taskService.updateStatus(id,statusUpdateDTO.status()));
+    }
+    @PostMapping("/{id}/migrate")
+    public ResponseEntity<TaskSummaryDTO> migrate(@PathVariable Long id, @RequestBody MigrationRequest migrationRequest) {
+        return ResponseEntity.ok(taskService.migrate(id, migrationRequest.target()));
+    }
+
 }

@@ -107,3 +107,18 @@ export interface TaskCardProps {
   onDelete?: (taskId: number) => void;
   onStatusChange?: (taskId: number, completed: boolean) => void;
 }
+// ------------- Comment -----------------
+export interface CommentCreateDTO {
+    content: string;
+    taskId: number;
+    userId: number;
+}
+export interface CommentSummaryDTO {
+    id: number;
+    content: string;
+    taskId: number;
+    userId: number;
+}
+export interface CommentUpdateDTO {
+    content: string;
+}

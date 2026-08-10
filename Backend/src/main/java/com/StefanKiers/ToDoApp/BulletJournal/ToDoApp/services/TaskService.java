@@ -4,10 +4,13 @@ package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.services;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.TaskCreateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.TaskSummaryDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.TaskUpdateDTO;
+import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums.MigrationTarget;
+import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums.Status;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.exceptions.ResourceNotFoundException;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.mapper.TaskMapper;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.models.Task;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.repository.TaskRepository;
+import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.utils.DateUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -24,38 +27,63 @@ public class TaskService {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
     }
-
     public TaskSummaryDTO create(TaskCreateDTO dto) {
         Task task = taskMapper.toEntity(dto);
         return taskMapper.toTaskSummaryDTO(taskRepository.save(task));
     }
-
     public List<TaskSummaryDTO> getAll() {
+        autoRevertMigratedTasks();
         return taskMapper.toTaskSummaryDTOList(taskRepository.findAll());
     }
-
     public TaskSummaryDTO getById(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
         return taskMapper.toTaskSummaryDTO(task);
     }
-
     public List<TaskSummaryDTO> getByTaskListId(Long taskListId) {
+        autoRevertMigratedTasks();
         return taskMapper.toTaskSummaryDTOList(taskRepository.findByTaskListId(taskListId));
     }
+<<<<<<< Updated upstream
 
     public TaskSummaryDTO updateTask(Long id, TaskUpdateDTO dto) {
+=======
+    public TaskSummaryDTO update(Long id, TaskUpdateDTO dto) {
+>>>>>>> Stashed changes
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
         taskMapper.updateEntity(task, dto);
         Task saved = taskRepository.save(task);
         return taskMapper.toTaskSummaryDTO(taskRepository.save( saved));
     }
-
     public void delete(Long id) {
         if (!taskRepository.existsById(id)) {
             throw new ResourceNotFoundException("Task not found");
         }
         taskRepository.deleteById(id);
+    }
+    public TaskSummaryDTO updateStatus(Long id, Status status ) {
+        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task not found"));
+        task.setStatus(status);
+        return taskMapper.toTaskSummaryDTO(taskRepository.save(task));
+    }
+    public TaskSummaryDTO migrate(Long id, MigrationTarget target) {
+        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task not Found"));
+        task.getDateInfo().setTargetDate(DateUtils.resolveMigrationDate(target));
+        task.setStatus(Status.MIGRATED);
+        task.setMigrationCount(task.getMigrationCount() + 1);
+        return taskMapper.toTaskSummaryDTO(taskRepository.save(task));
+    }
+    private void autoRevertMigratedTasks(){
+        List<Task> dueTasks = taskRepository.findByStatus(Status.MIGRATED)
+                .stream()
+                .filter(task -> DateUtils.isDueOrPast(task.getDateInfo().getTargetDate()))
+                .toList();
+        if (dueTasks.isEmpty()) return;
+        for (Task task : dueTasks) {
+            task.setStatus(Status.CREATED);
+            task.getDateInfo().setTargetDate(null);
+        }
+        taskRepository.saveAll(dueTasks);
     }
 }

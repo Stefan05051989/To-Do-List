@@ -19,7 +19,7 @@ function Card({ tasks, status, onDelete, onMove }) {
       // onder: else deed het niet.
     }else if (action){
       onMove(taskId, action)
-    }
+    }qs
     setSelectedTaskId(null)
   }
 
@@ -80,7 +80,7 @@ function Card({ tasks, status, onDelete, onMove }) {
       {/* conditional rendering */}
       {tasks.length === 0 ? (
         <p className="cardEmpty">No Tasks</p>
-        // als leeg, dan dit : <- (zo niet, dan dit.
+        // als leeg, dan dit)  : <- (zo niet, dan dit.
       ) : (
         <ul className="cardList">
           {tasks.map((task) => (

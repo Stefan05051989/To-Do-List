@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { API_URL } from "../App";
+import { useEffect, useState } from "react";
+import { API_ROUTES } from "../api/routes"; 
 import type { TaskListSummaryDTO } from "../types/models.d";
 import Board from "../components/board";
 import { useUser } from "../stores/userStore";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import TaskListCreate from "../components/taskListCreate";
 
 const TaskListPage = () => {
@@ -20,15 +19,15 @@ const TaskListPage = () => {
         }
     }, [user.id, navigate]);
 
-    // TASKLISTS, NIET TASKLIST
+    // tasklist
     const { data: taskLists, isLoading, error } = useQuery<TaskListSummaryDTO[]>({
         queryKey: ["taskLists", user.id],
         queryFn: async () => {
-            const response = await fetch(`${API_URL}/tasklists/user/${user.id}`);
+            const response = await fetch(API_ROUTES.tasklistsByUserId(user.id));
             if (!response.ok) throw new Error("tasklist error");
             return response.json();
         },
-        enabled: !isNaN(user.id),
+        enabled: !isNaN(user.id) && user.id > 0,
     });
 
     if (isLoading) return <div className="loading">Loading...</div>;
@@ -48,9 +47,9 @@ const TaskListPage = () => {
 
     return (
         <>
-        <TaskListCreate />
-        <div className="tasklist-page">
-            <h1>Mijn To-Do's</h1>
+<div className="tasklist-page">
+            <h1>Mijn Lijsten</h1>
+            <TaskListCreate/>
             <div className="tasklist-grid">
                 {taskLists && taskLists.length > 0 ? (
                     taskLists.map((taskList) => (
@@ -68,7 +67,7 @@ const TaskListPage = () => {
                 )}
             </div>
         </div>
-        </>
+    </>
     );
 };
 

@@ -12,10 +12,10 @@ INSERT INTO task_list (title, user_id) VALUES
 ('Boodschappen', 3);
 
 -- Tasks
-INSERT INTO task (title, content, task_list_id, status, user_id) VALUES
-('Backend afmaken', 'Spring Boot API compleet maken', 1, 'IN_PROGRESS', 1),
-('Frontend bouwen', 'React components maken', 1, 'CREATED', 1),
-('TypeScript leren', 'Cursus volgen', 2, 'IN_PROGRESS', 1),
-('React Query oefenen', 'useMutation implementeren', 2, 'CREATED', 1),
-('Boodschappen doen', 'Melk, brood, kaas', 4, 'CREATED', 3),
-('Sportschool', 'Maandag en woensdag', 3, 'DONE', 2);
+INSERT INTO task (title, content, task_list_id, status, user_id, migration_count) VALUES
+('Backend afmaken', 'Spring Boot API compleet maken', 1, 'IN_PROGRESS', 1, 0),
+('Frontend bouwen', 'React components maken', 1, 'CREATED', 1, 0),
+('TypeScript leren', 'Cursus volgen', 2, 'IN_PROGRESS', 1, 0),
+('React Query oefenen', 'useMutation implementeren', 2, 'CREATED', 1, 0),
+('Boodschappen doen', 'Melk, brood, kaas', 4, 'CREATED', 3, 0),
+('Sportschool', 'Maandag en woensdag', 3, 'DONE', 2, 0);

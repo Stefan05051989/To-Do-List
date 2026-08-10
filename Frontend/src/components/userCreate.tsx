@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { API_URL } from "../App";
+import { API_URL } from "../api/config";
 import type { UserCreateDTO } from "../types/models.d";
 import { useState } from "react";
 

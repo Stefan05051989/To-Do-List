@@ -1,0 +1,59 @@
+Samenvatting Backend Endpoints voor HTTPie
+
+Users (/users):
+POST   /users                      - aanmaken
+GET    /users                      - alle users
+GET    /users/{id}                 - user op id
+PUT    /users/{id}                 - update
+DELETE /users/{id}                 - verwijderen
+PUT    /users/change-password      - wachtwoord wijzigen
+
+TaskList (/tasklist):
+POST   /tasklist                   - aanmaken
+GET    /tasklist                   - alle tasklists
+GET    /tasklist/{id}              - specifieke tasklist
+GET    /tasklist/user/{userId}     - tasklists van user
+PUT    /tasklist/{id}              - update
+DELETE /tasklist/{id}              - verwijderen
+
+Task (/task):
+POST   /task                       - aanmaken
+GET    /task                       - alle tasks
+GET    /task/{id}                  - specifieke task
+GET    /task/tasklist/{taskListId} - tasks van tasklist
+PUT    /task/{id}                  - update
+DELETE /task/{id}                  - verwijderen
+PATCH  /task/{id}/status           - status wijzigen
+POST   /task/{id}/migrate          - taak migreren (target: TOMORROW | NEXT_MONDAY | NEXT_MONTH_START | NEXT_JANUARY_FIRST)
+
+Status enum:
+CREATED, IN_PROGRESS, DONE, TESTING, ARCHIVED, MIGRATED
+
+MigrationTarget enum:
+TOMORROW, NEXT_MONDAY, NEXT_MONTH_START, NEXT_JANUARY_FIRST
+
+---
+
+Backend Endpoint                    Frontend (API_ROUTES in src/api/routes.ts)
+POST   /users                       API_ROUTES.users
+GET    /users                       API_ROUTES.users
+GET    /users/{id}                  API_ROUTES.userById(id)
+PUT    /users/{id}                  API_ROUTES.userById(id)
+DELETE /users/{id}                  API_ROUTES.userById(id)
+PUT    /users/change-password       API_ROUTES.users + "/change-password"  (nog toevoegen aan routes.ts)
+
+POST   /tasklist                    API_ROUTES.tasklist
+GET    /tasklist                    API_ROUTES.tasklist
+GET    /tasklist/{id}               API_ROUTES.tasklistById(id)
+GET    /tasklist/user/{userId}      API_ROUTES.tasklistsByUserId(userId)
+PUT    /tasklist/{id}               API_ROUTES.tasklistById(id)
+DELETE /tasklist/{id}               API_ROUTES.tasklistById(id)
+
+POST   /task                        API_ROUTES.task
+GET    /task                        API_ROUTES.task
+GET    /task/{id}                   API_ROUTES.taskById(id)
+GET    /task/tasklist/{taskListId}  API_ROUTES.task + "/tasklist/" + id  (nog toevoegen aan routes.ts)
+PUT    /task/{id}                   API_ROUTES.taskById(id)
+DELETE /task/{id}                   API_ROUTES.taskById(id)
+PATCH  /task/{id}/status            API_ROUTES.taskStatus(id)
+POST   /task/{id}/migrate           API_ROUTES.taskMigrate(id)

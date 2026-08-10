@@ -1,12 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import type { TaskListCreateDTO } from "../types/models.d";
-import { API_URL } from "../App";
+import { API_ROUTES } from "../api/routes";
 import  { useUser }  from "../stores/userStore";
 
 const TaskListCreate = () => {
     const user = useUser();
-
     const [taskList, setState] = useState({ title: "" });
     const queryClient = useQueryClient();
 
@@ -14,7 +13,7 @@ const TaskListCreate = () => {
         mutationFn: async (taskList: TaskListCreateDTO) => {
             const data = { title: taskList.title, userId: user.id};
 
-            const response = await fetch(`${API_URL}/tasklists`, {
+            const response = await fetch(API_ROUTES.tasklist, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),

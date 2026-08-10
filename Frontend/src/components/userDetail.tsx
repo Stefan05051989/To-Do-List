@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useUser } from "../stores/userStore";
-import { API_URL } from "../App";
-import type { UserSummaryDTO } from "../types/models.d";  // ✅ Fix type naam
+import { API_URL } from "../api/config";
+import type { UserSummaryDTO } from "../types/models.d";
 
 const UserDetail = () => {
     const user = useUser();
