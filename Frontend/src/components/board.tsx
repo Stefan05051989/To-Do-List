@@ -1,10 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { API_URL } from "../App";
+import { API_URL } from "../api/config";
 import type { TaskSummaryDTO, TaskCreateDTO, TaskUpdateDTO, Status, BoardProps } from "../types/models.d";
 import {DndContext,type DragEndEvent ,DragOverlay, type DragStartEvent, PointerSensor, useSensor, useSensors, closestCorners} from "@dnd-kit/core";
 import Column from "../components/TaskColumnDroppable";
 import TaskCard from "./TaskCard";
+import "../styles/BoarCardTask.css";
 
 
 const COLUMNS: { status: Status; title: string }[] = [
@@ -75,7 +76,7 @@ const updateTask = useMutation({
     // Delete tasklist
     const deleteTaskList = useMutation({
         mutationFn: async () => {
-            const response = await fetch(`${API_URL}/tasklists/${taskListId}`, {
+            const response = await fetch(`${API_URL}/tasklist/${taskListId}`, {
                 method: "DELETE",
             });
             if (!response.ok) throw new Error("Failed to delete tasklist.");

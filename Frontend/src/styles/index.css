@@ -372,6 +372,7 @@ body {
 .archived-banner .cardText {
   color: #666;
 } 
+<<<<<<< Updated upstream
 
 BoardTaskcss voor drag en drop */
 /* .board {
@@ -420,3 +421,6 @@ BoardTaskcss voor drag en drop */
     text-align: center;
     font-style: italic;
 }
+=======
+  */
+>>>>>>> Stashed changes

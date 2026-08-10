@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import type { TaskCreateDTO } from "../types/models.d";
-import { API_URL } from "../App";
+import { API_URL } from "../api/config";
 
 interface TaskCreateProps {
     setPlacingTask: (id: number) => void;

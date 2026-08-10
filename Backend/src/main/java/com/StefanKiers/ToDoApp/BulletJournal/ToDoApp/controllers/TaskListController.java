@@ -42,6 +42,7 @@ public class TaskListController {
         return ResponseEntity.ok(taskListService.getByUserId(userId));
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<TaskListSummaryDTO> update(@PathVariable Long id, @RequestBody TaskListUpdateDTO dto) {
         return ResponseEntity.ok(taskListService.update(id, dto));

@@ -1,5 +1,4 @@
 package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task;
-
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums.Status;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

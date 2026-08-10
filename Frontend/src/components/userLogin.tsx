@@ -1,7 +1,7 @@
 import { useState } from "react";
 import UserCreate from "./userCreate";
 import { logout, updateUser } from "../stores/userStore";
-import { API_URL } from "../App";
+import { API_URL } from "../api/config";
 import type { UserSummaryDTO } from "../types/models.d";
 
 const UserLogin = () => {

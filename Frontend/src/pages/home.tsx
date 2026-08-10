@@ -14,7 +14,8 @@ const HomePage = () => {
             )}
             <strong>Home</strong>
             <UserLogin />
-            {/* <hr /> */}
+            <hr />
+
         </div>
     );
 };

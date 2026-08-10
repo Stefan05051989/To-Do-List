@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { API_URL } from "../App";
+import { API_URL } from "../api/config";
 import type { Status, TaskListDetailProps, TaskListSummaryDTO, TaskSummaryDTO, TaskUpdateDTO } from "../types/models.d";
 import TaskCreate from "./taskCreate";
 import { useUser } from "../stores/userStore";
@@ -91,7 +91,7 @@ const TaskListDetail = ({ taskListId, setTaskListId }: TaskListDetailProps) => {
     } = useQuery<TaskListSummaryDTO>({
         queryKey: ["taskLists", taskListId],
         queryFn: async () => {
-            const response = await fetch(`${API_URL}/tasklists/${taskListId}`);
+            const response = await fetch(`${API_URL}/tasklist/${taskListId}`);
             if (!response.ok) throw new Error("tasklist error");
             return response.json();
         },
