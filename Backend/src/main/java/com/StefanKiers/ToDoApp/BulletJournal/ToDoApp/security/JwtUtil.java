@@ -70,6 +70,7 @@ public class JwtUtil {
             extractClaims(token);
             return true;
         }catch (JwtException | IllegalArgumentException exception) {
+//            System.out.println("DEBUG: JWT Token is invalid" + exception.getClass());
             return false;
         }
     }
