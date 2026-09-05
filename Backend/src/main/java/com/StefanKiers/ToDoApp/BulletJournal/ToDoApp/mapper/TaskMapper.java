@@ -1,13 +1,11 @@
 // mapper/TaskMapper.java
 package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.mapper;
-
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.TaskCreateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.TaskSummaryDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.task.TaskUpdateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums.Status;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.models.Task;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Component
@@ -17,7 +15,6 @@ public class TaskMapper {
         Task task = new Task();
         task.setTitle(dto.title());
         task.setContent(dto.content());
-        task.setTaskListId(dto.taskListId());
         task.setStatus(dto.status() != null ? dto.status() : Status.CREATED);
         return task;
     }
@@ -35,7 +32,7 @@ public class TaskMapper {
                 task.getId(),
                 task.getTitle(),
                 task.getContent(),
-                task.getTaskListId(),
+                task.getTaskList().getId(),
                 task.getStatus(),
                 task.getDateInfo().getCreatedAt(),
                 task.getDateInfo().getCreatedAt(),

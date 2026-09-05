@@ -44,12 +44,7 @@ public class TaskService {
         autoRevertMigratedTasks();
         return taskMapper.toTaskSummaryDTOList(taskRepository.findByTaskListId(taskListId));
     }
-<<<<<<< Updated upstream
-
     public TaskSummaryDTO updateTask(Long id, TaskUpdateDTO dto) {
-=======
-    public TaskSummaryDTO update(Long id, TaskUpdateDTO dto) {
->>>>>>> Stashed changes
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
         taskMapper.updateEntity(task, dto);

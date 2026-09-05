@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/tasklists")
+@RequestMapping("/tasklist")
 public class TaskListController {
 
     private final TaskListService taskListService;
@@ -67,7 +67,7 @@ public class TaskListController {
 //        | **TaskListSummaryDTO** | id, title |
 //        | **TaskListUpdateDTO** | title |
 //        | **TaskListMapper** | `toEntity()`, `updateEntity()`, `toTaskListSummaryDTO()`, `toTaskListSummaryDTOList()` |
-//        | **TaskListService** | `create()`, `getAll()`, `getById()`, `getByUserId()`, `updateTask()`, `delete()` |
+//        | **TaskListService** | `createUser()`, `getAll()`, `getById()`, `getByUserId()`, `updateTask()`, `delete()` |
 //        | **TaskListController** | POST, GET, GET/{id}, GET/user/{userId}, PUT/{id}, DELETE/{id} |
 //
 //        ---

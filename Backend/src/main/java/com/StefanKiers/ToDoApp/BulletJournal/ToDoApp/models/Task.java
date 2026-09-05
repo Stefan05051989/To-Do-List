@@ -4,8 +4,6 @@ import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "task")
 public class Task {
@@ -17,7 +15,11 @@ public class Task {
     private String title;
     @Column(columnDefinition = "TEXT")
     private String content;
-    private Long taskListId;
+
+    @ManyToOne
+    @JoinColumn(name = "task_list_id")
+    @JsonIgnore
+    private TaskList taskList;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -49,11 +51,11 @@ public class Task {
     public void setContent(String content) {
         this.content = content;
     }
-    public Long getTaskListId() {
-        return taskListId;
+    public TaskList getTaskList() {
+        return taskList;
     }
-    public void setTaskListId(Long taskListId) {
-        this.taskListId = taskListId;
+    public void setTaskList(TaskList taskList) {
+        this.taskList = taskList;
     }
     public Status getStatus() {
         return status;
