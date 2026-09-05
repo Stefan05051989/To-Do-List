@@ -1,11 +1,9 @@
 package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.config;
-
-
+import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.security.JWTAuthEntryPoint;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,9 +25,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity(prePostEnabled = true) // enables pre authorize.
 public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JWTAuthEntryPoint jwtAuthEntryPoint;
 
-    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter) {
+    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter,  JWTAuthEntryPoint jwtAuthEntryPoint) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.jwtAuthEntryPoint =  jwtAuthEntryPoint;
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -40,14 +40,13 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exceptions -> exceptions
-                        .authenticationEntryPoint(((request, response, authException) ->
-                                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized"))))
+                        .authenticationEntryPoint(jwtAuthEntryPoint))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
-                        .anyRequest().authenticated()
-                ).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

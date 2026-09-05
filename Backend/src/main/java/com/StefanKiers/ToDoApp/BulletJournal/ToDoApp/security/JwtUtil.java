@@ -6,6 +6,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
@@ -30,9 +31,12 @@ public class JwtUtil {
     @Value("${jwt.refresh-expiration}")
     private long refreshExpirationMs;
 
-    private SecretKey getSigningKey() {
+    private SecretKey signingKey;
+
+    @PostConstruct
+    public void init() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
-        return Keys.hmacShaKeyFor(keyBytes);
+        signingKey = Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String generateAccessToken(User user) {
@@ -42,7 +46,7 @@ public class JwtUtil {
                 .claim("type", "access")
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis()+ accessExpirationMs))
-                .signWith(getSigningKey())
+                .signWith(signingKey)
                 .compact();
     }
     public String generateRefreshToken(User user) {
@@ -52,12 +56,12 @@ public class JwtUtil {
                 .claim("type", "refresh")
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + refreshExpirationMs))
-                .signWith(getSigningKey())
+                .signWith(signingKey)
                 .compact();
     }
     public Claims extractClaims(String token) {
         return Jwts.parser()
-                .verifyWith(getSigningKey())
+                .verifyWith(signingKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
