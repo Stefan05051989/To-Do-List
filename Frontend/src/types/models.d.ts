@@ -122,3 +122,10 @@ export interface CommentSummaryDTO {
 export interface CommentUpdateDTO {
     content: string;
 }
+
+interface User {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+}
