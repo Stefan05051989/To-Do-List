@@ -1,8 +1,8 @@
 -- Users
 INSERT INTO users (first_name, last_name, email, password, is_admin) VALUES
-('Stefan', 'Kiers', 'stefan@test.nl', 'password123', true),
-('Jan', 'Jansen', 'jan@test.nl', 'password123', false),
-('Piet', 'Pietersen', 'piet@test.nl', 'password123', false);
+('Stefan', 'Kiers', 'stefan@test.nl', '$2b$12$FFAQXFVUroAUirZjORR.nOddUzqAUkhvGypIomBHYVGJYVYYRJ3rO', true),
+('Jan', 'Jansen', 'jan@test.nl', '$2b$12$FFAQXFVUroAUirZjORR.nOddUzqAUkhvGypIomBHYVGJYVYYRJ3rO', false),
+('Piet', 'Pietersen', 'piet@test.nl', '$2b$12$FFAQXFVUroAUirZjORR.nOddUzqAUkhvGypIomBHYVGJYVYYRJ3rO', false);
 
 -- Task Lists
 INSERT INTO task_list (title, user_id) VALUES
