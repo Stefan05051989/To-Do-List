@@ -8,8 +8,8 @@ package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums;
  * @since 4-9-2026
  */
 public enum Role {
-    ADMIN,
     SCRUM_MASTER,
     PRODUCT_OWNER,
-    DEVELOPER
+    DEVELOPER,
+    CLIENT
 }
