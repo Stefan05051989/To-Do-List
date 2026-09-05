@@ -1,7 +1,11 @@
 package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -11,15 +15,22 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID",  nullable = false,  length = 100, unique = false)
     private Long id;
+    @Column(name = "FIRST_NAME",  nullable = false,  length = 100, unique = false)
     private String firstName;
+    @Column(name = "LAST_NAME",  nullable = false,  length = 100, unique = false)
     private String lastName;
-
     @JsonIgnore
+    @Column(name = "PASSWORD", nullable = false,  length = 64)
     private String password;
-
-    @Column(unique = true, nullable = false)
+    @Column(name = "EMAIL",  nullable = false,  length = 100, unique = false)
     private String email;
+    @Temporal(TemporalType.DATE)
+    private LocalDate dateOfBirth;
+    @Column(name = "IS_ADMIN", nullable = false,  length = 50)
+    private boolean isAdmin = false;
+
 
 //    @OneToMany(mappedBy = "user")
 //    List<Comment> comments = new ArrayList<>();
@@ -31,11 +42,12 @@ public class User {
     List<Task> tasks = new ArrayList<>();
 
     public User() {}
-    public User(String firstName, String lastName, String password, String email) {
+    public User(String firstName, String lastName, String password, String email, LocalDate dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
+        this.dateOfBirth = dateOfBirth;
     }
     public Long getId() {
         return id;
@@ -64,5 +76,19 @@ public class User {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+    public boolean isAdmin() {
+        return isAdmin;
+    }
 
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    @Transient
+    public int getAge(){
+        if (dateOfBirth == null){ // <- zo crasht app niet als er geen dob is.
+            return 0;
+        }
+        return Period.between(dateOfBirth, LocalDate.now()).getYears();
+    }
 }

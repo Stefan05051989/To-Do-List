@@ -23,7 +23,6 @@ public class UserMapper {
         user.setLastName(dto.lastName());
         user.setEmail(dto.email());
     }
-
     public UserSummaryDTO toUserSummaryDTO(User user) {
         return new UserSummaryDTO(
                 user.getId(),
@@ -32,7 +31,6 @@ public class UserMapper {
                 user.getEmail()
         );
     }
-
     public List<UserSummaryDTO> toUserSummaryDTOList(List<User> users) {
         return users.stream()
                 .map(this::toUserSummaryDTO)

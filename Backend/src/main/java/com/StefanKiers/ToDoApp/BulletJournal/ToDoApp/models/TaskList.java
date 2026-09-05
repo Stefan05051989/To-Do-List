@@ -19,6 +19,10 @@ public class TaskList {
     @JsonIgnore
     private User user;
 
+    @OneToMany(mappedBy = "taskList")
+    @JsonIgnore
+    private java.util.List<Task> tasks = new java.util.ArrayList<>();
+
     public TaskList() {}
 
     public Long getId() {
