@@ -2,6 +2,7 @@ package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.mapper;
 
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.project.ProjectCreateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.project.ProjectSummaryDTO;
+import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.project.ProjectUpdateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.models.Project;
 import org.springframework.stereotype.Component;
 
@@ -23,9 +24,9 @@ public class ProjectMapper {
         project.setDeadline(projectCreateDTO.deadLine());
         return project;
     }
-    public void updateEntity(ProjectCreateDTO projectCreateDTO, Project project) {
-        project.setTitle(projectCreateDTO.title());
-        project.setDeadline(projectCreateDTO.deadLine());
+    public void updateEntity(Project project, ProjectUpdateDTO projectUpdateDTO) {
+        project.setTitle(projectUpdateDTO.title());
+        project.setDeadline(projectUpdateDTO.deadLine());
     }
     public ProjectSummaryDTO toProjectSummaryDTO(Project project) {
         return new ProjectSummaryDTO(
