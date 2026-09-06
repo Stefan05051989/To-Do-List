@@ -1,25 +1,44 @@
 package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.exceptions;
 
+import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.globalerrordto.GlobalErrorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    public ResponseEntity<GlobalErrorResponseDTO> handleNotFoundException(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new GlobalErrorResponseDTO(ex.getMessage(), List.of()));
     }
 
     @ExceptionHandler(IncorrectPasswordException.class)
-    public ResponseEntity<String> handleIncorrectPassword(IncorrectPasswordException ex) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    public ResponseEntity<GlobalErrorResponseDTO> handleIncorrectPassword(IncorrectPasswordException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new GlobalErrorResponseDTO(ex.getMessage(), List.of()));
     }
 
     @ExceptionHandler(SamePasswordException.class)
-    public ResponseEntity<String> handleSamePassword(SamePasswordException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    public ResponseEntity<GlobalErrorResponseDTO> handleSamePassword(SamePasswordException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new GlobalErrorResponseDTO(ex.getMessage(), List.of()));
     }
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ResponseEntity<GlobalErrorResponseDTO> handleDuplicateEmail(DuplicateEmailException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new GlobalErrorResponseDTO(ex.getMessage(), List.of()));
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<GlobalErrorResponseDTO> handleValidationErrors(MethodArgumentNotValidException ex) {
+        List<String> details = ex.getBindingResult().getFieldErrors().stream().map(fieldError -> fieldError.getField() +
+                ": " + fieldError.getDefaultMessage()).toList();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GlobalErrorResponseDTO("Validation failed", details));
+    }
+
 }

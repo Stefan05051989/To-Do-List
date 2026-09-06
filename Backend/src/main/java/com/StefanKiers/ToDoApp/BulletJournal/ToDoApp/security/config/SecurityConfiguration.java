@@ -1,4 +1,4 @@
-package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.config;
+package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.security.config;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.security.JWTAuthEntryPoint;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * @author Stefan Kiers
  * @since 11-1-2026
  */
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true) // enables pre authorize.

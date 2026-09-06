@@ -6,6 +6,7 @@ import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.user.UserCreateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.user.UserSummaryDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.user.UserUpdateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserSummaryDTO> create(@RequestBody UserCreateDTO dto) {
+    public ResponseEntity<UserSummaryDTO> create(@Valid @RequestBody UserCreateDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(dto));
     }
 
@@ -50,7 +51,7 @@ public class UserController {
     }
 
     @PutMapping("/change-password")
-    public ResponseEntity<UserSummaryDTO> changePassword(@RequestBody UserChangePasswordDTO dto) {
+    public ResponseEntity<UserSummaryDTO> changePassword(@Valid @RequestBody UserChangePasswordDTO dto) {
         return ResponseEntity.ok(userService.changePassword(dto));
     }
 }
