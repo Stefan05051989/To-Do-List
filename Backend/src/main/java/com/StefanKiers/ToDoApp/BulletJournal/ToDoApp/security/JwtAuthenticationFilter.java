@@ -26,33 +26,54 @@ import java.io.IOException;
  */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil, UserRepository userRepository) {
+    public JwtAuthenticationFilter(
+            JwtUtil jwtUtil,
+            UserRepository userRepository
+    ) {
         this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
     }
-
-
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest httpServletRequest,
+                                    HttpServletResponse httpServletResponse,
+                                    FilterChain filterChain) throws ServletException, IOException {
         String token = parseToken(httpServletRequest);
-        System.out.println("DEBUG - token gevonden: " + token);
+        System.out.println("DEBUG - token aanwezig: " + (token != null));
         if (token != null) {
-            System.out.println("DEBUG - isTokenValid: " + jwtUtil.isTokenValid(token));
-        }
-        if (token != null && jwtUtil.isTokenValid(token)) {
-            String email = jwtUtil.extractEmail(token);
-            System.out.println("DEBUG - email: " + email);
-            Optional<User> user = userRepository.findByEmail(email);
-            System.out.println("DEBUG - user: " + user.get());
-            if (user.isPresent()) {
-                List<SimpleGrantedAuthority> authorities = user.get().isAdmin() ? List.of(new SimpleGrantedAuthority("ROLE_ADMIN")) : List.of();
+            boolean tokenValid = jwtUtil.isTokenValid(token);
+            System.out.println("DEBUG - isTokenValid: " + tokenValid);
+            if (tokenValid) {
+                String email = jwtUtil.extractEmail(token);
+                System.out.println("DEBUG - email uit JWT: " + email);
+                Optional<User> userOptional = userRepository.findByEmail(email);
+                if (userOptional.isPresent()) {
+                    User user = userOptional.get();
+                    System.out.println("DEBUG - user gevonden: " + user.getEmail());
+                    List<SimpleGrantedAuthority> authorities;
+                    if (user.isAdmin()) {
+                        authorities = List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+                        System.out.println("DEBUG - gebruiker is ADMIN");
+                    } else {
+                        authorities = List.of();
+                        System.out.println("DEBUG - gebruiker is GEEN ADMIN");
+                    }
 
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user.get(), null, authorities);
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                System.out.println("DEBUG - username: " + usernamePasswordAuthenticationToken);
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(
+                                    user,
+                                    null,
+                                    authorities);
+
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    System.out.println("DEBUG - authentication aangemaakt: " + authentication.getName());
+                    System.out.println("DEBUG - authorities: " + authentication.getAuthorities());
+                } else {
+                    System.out.println("DEBUG - GEEN USER GEVONDEN VOOR: " + email);
+                }
             }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);

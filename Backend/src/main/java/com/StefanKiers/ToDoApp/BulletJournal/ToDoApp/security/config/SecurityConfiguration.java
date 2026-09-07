@@ -18,28 +18,26 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * SecurityConfiguration
- * Challenge: com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.config
+ * Regelt beveiliging van REST API.
  *
  * @author Stefan Kiers
  * @since 11-1-2026
  */
-
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true) // enables pre authorize.
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JWTAuthEntryPoint jwtAuthEntryPoint;
-
-    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter,  JWTAuthEntryPoint jwtAuthEntryPoint) {
+    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, JWTAuthEntryPoint jwtAuthEntryPoint) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.jwtAuthEntryPoint =  jwtAuthEntryPoint;
+        this.jwtAuthEntryPoint = jwtAuthEntryPoint;
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    // bean voor lege gebruikersopslag.
+    // bean voor lege gebruikersopslag, voorkomt Spring's "generated security password"-fallback.
     @Bean
     public UserDetailsService userDetailsService() {
         return new InMemoryUserDetailsManager();
@@ -47,10 +45,12 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exceptions -> exceptions
-                        .authenticationEntryPoint(jwtAuthEntryPoint).accessDeniedHandler((request, response, accessDeniedException)->
-                        response.sendError(HttpStatus.FORBIDDEN.value(), "Forbidden")))
+                        .authenticationEntryPoint(jwtAuthEntryPoint)
+                        .accessDeniedHandler((request, response, accessDeniedException) ->
+                                response.sendError(HttpStatus.FORBIDDEN.value(), "Forbidden")))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
