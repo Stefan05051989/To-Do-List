@@ -25,6 +25,8 @@ public class UserSecurity {
     }
     public boolean isAdmin(Authentication authentication) {
         User user = extractUser(authentication);
+        System.out.println("DEBUG - UserSecurity.isAdmin aangeroepen. user null? " + (user == null)
+                           + ", isAdmin: " + (user != null && user.isAdmin()));
         return user != null && user.isAdmin();
     }
     public boolean hasProjectRole(Authentication authentication, Long projectId, Role role) {

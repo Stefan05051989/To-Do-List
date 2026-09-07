@@ -38,21 +38,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String token = parseToken(httpServletRequest);
-//        System.out.println("DEBUG - token gevonden: " + token);
+        System.out.println("DEBUG - token gevonden: " + token);
         if (token != null) {
-//            System.out.println("DEBUG - isTokenValid: " + jwtUtil.isTokenValid(token));
+            System.out.println("DEBUG - isTokenValid: " + jwtUtil.isTokenValid(token));
         }
         if (token != null && jwtUtil.isTokenValid(token)) {
             String email = jwtUtil.extractEmail(token);
-//            System.out.println("DEBUG - email: " + email);
+            System.out.println("DEBUG - email: " + email);
             Optional<User> user = userRepository.findByEmail(email);
-//            System.out.println("DEBUG - user: " + user.get());
+            System.out.println("DEBUG - user: " + user.get());
             if (user.isPresent()) {
                 List<SimpleGrantedAuthority> authorities = user.get().isAdmin() ? List.of(new SimpleGrantedAuthority("ROLE_ADMIN")) : List.of();
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user.get(), null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-//                System.out.println("DEBUG - username: " + usernamePasswordAuthenticationToken);
+                System.out.println("DEBUG - username: " + usernamePasswordAuthenticationToken);
             }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);

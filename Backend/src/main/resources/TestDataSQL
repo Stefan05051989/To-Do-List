@@ -1,0 +1,50 @@
+-- =========================================================
+-- ToDoApp testdata
+-- Volgorde is belangrijk i.v.m. foreign keys:
+-- users -> project -> project_member -> task_list -> task
+-- =========================================================
+
+-- Users
+-- id 1 = Stefan (admin), id 2 = Jan, id 3 = Piet
+INSERT INTO users (first_name, last_name, email, password, is_admin) VALUES
+('Stefan', 'Kiers', 'stefan@test.nl', '$2b$12$FFAQXFVUroAUirZjORR.nOddUzqAUkhvGypIomBHYVGJYVYYRJ3rO', true),
+('Jan', 'Jansen', 'jan@test.nl', '$2b$12$FFAQXFVUroAUirZjORR.nOddUzqAUkhvGypIomBHYVGJYVYYRJ3rO', false),
+('Piet', 'Pietersen', 'piet@test.nl', '$2b$12$FFAQXFVUroAUirZjORR.nOddUzqAUkhvGypIomBHYVGJYVYYRJ3rO', false);
+
+-- Projects
+-- id 1 = ToDoApp Ontwikkeling, id 2 = Portfolio Website, id 3 = Scrum Trainingsproject
+-- (aanname: auto-increment start bij 1 op een lege tabel)
+INSERT INTO project (title, deadline) VALUES
+('ToDoApp Ontwikkeling', '2026-12-31'),
+('Portfolio Website', '2026-10-15'),
+('Scrum Trainingsproject', '2026-11-01');
+
+-- Project members
+-- Project 1: Stefan = Scrum Master, Jan = Developer, Piet = Client
+-- Project 2: Stefan = Product Owner, Jan = Scrum Master
+-- Project 3: Jan = Developer, Piet = Product Owner
+INSERT INTO project_member (project_id, user_id, role) VALUES
+(1, 1, 'SCRUM_MASTER'),
+(1, 2, 'DEVELOPER'),
+(1, 3, 'CLIENT'),
+(2, 1, 'PRODUCT_OWNER'),
+(2, 2, 'SCRUM_MASTER'),
+(3, 2, 'DEVELOPER'),
+(3, 3, 'PRODUCT_OWNER');
+
+-- Task Lists
+-- id 1 = Werk (Stefan), id 2 = Studie (Stefan), id 3 = Persoonlijk (Jan), id 4 = Boodschappen (Piet)
+INSERT INTO task_list (title, user_id) VALUES
+('Werk', 1),
+('Studie', 1),
+('Persoonlijk', 2),
+('Boodschappen', 3);
+
+-- Tasks
+INSERT INTO task (title, content, task_list_id, status, user_id, migration_count, created_at) VALUES
+('Backend afmaken', 'Spring Boot API compleet maken', 1, 'IN_PROGRESS', 1, 0, CURRENT_DATE),
+('Frontend bouwen', 'React components maken', 1, 'CREATED', 1, 0, CURRENT_DATE),
+('TypeScript leren', 'Cursus volgen', 2, 'IN_PROGRESS', 1, 0, CURRENT_DATE),
+('React Query oefenen', 'useMutation implementeren', 2, 'CREATED', 1, 0, CURRENT_DATE),
+('Boodschappen doen', 'Melk, brood, kaas', 4, 'CREATED', 3, 0, CURRENT_DATE),
+('Sportschool', 'Maandag en woensdag', 3, 'DONE', 2, 0, CURRENT_DATE);

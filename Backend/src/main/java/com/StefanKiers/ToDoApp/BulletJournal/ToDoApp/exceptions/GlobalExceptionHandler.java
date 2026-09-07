@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestControllerAdvice
@@ -17,13 +18,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new GlobalErrorResponseDTO(ex.getMessage(), List.of()));
     }
-
     @ExceptionHandler(IncorrectPasswordException.class)
     public ResponseEntity<GlobalErrorResponseDTO> handleIncorrectPassword(IncorrectPasswordException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new GlobalErrorResponseDTO(ex.getMessage(), List.of()));
     }
-
     @ExceptionHandler(SamePasswordException.class)
     public ResponseEntity<GlobalErrorResponseDTO> handleSamePassword(SamePasswordException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -40,5 +39,8 @@ public class GlobalExceptionHandler {
                 ": " + fieldError.getDefaultMessage()).toList();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GlobalErrorResponseDTO("Validation failed", details));
     }
-
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<GlobalErrorResponseDTO> handleAccessDenied(AccessDeniedException accessDeniedException){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new GlobalErrorResponseDTO("Access denied.", List.of()));
+    }
 }
