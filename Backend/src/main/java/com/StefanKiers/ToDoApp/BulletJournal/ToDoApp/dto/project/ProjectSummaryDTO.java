@@ -1,5 +1,4 @@
 package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.project;
-
 import java.time.LocalDate;
 
 /**
@@ -14,6 +13,6 @@ import java.time.LocalDate;
 public record ProjectSummaryDTO(
         Long id,
         String title,
-        LocalDate deadLine
+        LocalDate deadline
 ) {
 }

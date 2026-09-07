@@ -13,6 +13,6 @@ import java.time.LocalDate;
 
 public record ProjectCreateDTO(
         String title,
-        LocalDate deadLine
+        LocalDate deadline
 ) {
 }

@@ -21,12 +21,12 @@ public class ProjectMapper {
     public Project toEntity(ProjectCreateDTO projectCreateDTO) {
         Project project = new Project();
         project.setTitle(projectCreateDTO.title());
-        project.setDeadline(projectCreateDTO.deadLine());
+        project.setDeadline(projectCreateDTO.deadline());
         return project;
     }
     public void updateEntity(Project project, ProjectUpdateDTO projectUpdateDTO) {
         project.setTitle(projectUpdateDTO.title());
-        project.setDeadline(projectUpdateDTO.deadLine());
+        project.setDeadline(projectUpdateDTO.deadline());
     }
     public ProjectSummaryDTO toProjectSummaryDTO(Project project) {
         return new ProjectSummaryDTO(

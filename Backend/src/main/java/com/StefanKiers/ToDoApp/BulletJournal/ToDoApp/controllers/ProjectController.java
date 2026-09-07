@@ -21,14 +21,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/project")
 @CrossOrigin(origins = "*")
-class ProjectController {
+public class ProjectController {
     private final ProjectService projectService;
 
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }
+
     @PostMapping
-    @PreAuthorize("hasAnyRole('SCRUM_MASTER', 'PRODUCT_OWNER') or @userSecurity.isAdmin(authentication)")
+    @PreAuthorize("@userSecurity.isAdmin(authentication)")
     public ResponseEntity<ProjectSummaryDTO> createProject(@RequestBody ProjectCreateDTO projectCreateDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.createProject(projectCreateDTO));
     }
@@ -41,7 +42,8 @@ class ProjectController {
         return ResponseEntity.ok(projectService.getProjectById(id));
     }
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('SCRUM_MASTER', 'PRODUCT_OWNER') or @userSecurity.isAdmin(authentication)")
+    @PreAuthorize("@userSecurity.hasProjectRole(authentication, #id, T(com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums.Role).SCRUM_MASTER) " +
+    "or @userSecurity.hasProjectRole(authentication, #id, T(com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums.Role).PRODUCT_OWNER)")
     public ResponseEntity<ProjectSummaryDTO> updateProject(@PathVariable Long id, @RequestBody ProjectUpdateDTO projectUpdateDTO) {
         return ResponseEntity.ok(projectService.updateProject(id, projectUpdateDTO));
     }

@@ -11,6 +11,6 @@ import java.time.LocalDate;
 
 public record ProjectUpdateDTO(
         String title,
-        LocalDate deadLine
+        LocalDate deadline
 ) {
 }

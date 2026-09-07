@@ -1,6 +1,4 @@
-// controllers/UserController.java
 package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.controllers;
-
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.user.UserChangePasswordDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.user.UserCreateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.user.UserSummaryDTO;
@@ -10,7 +8,6 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
