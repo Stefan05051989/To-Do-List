@@ -9,6 +9,6 @@ package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.projectmember;
 
 
 public record ProjectMemberAddDTO(
-        Long userdId
+        Long userId
 ) {
 }

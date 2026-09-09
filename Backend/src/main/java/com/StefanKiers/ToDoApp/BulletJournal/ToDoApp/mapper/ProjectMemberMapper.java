@@ -5,15 +5,6 @@ import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.models.ProjectMember;
 import org.springframework.stereotype.Component;
 import java.util.List;
 
-/**
- * ProjectMemberMapper
- * Challenge: com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.mapper
- *
- * @author Stefan Kiers
- * @since 5-9-2026
- */
-
-
 @Component
 public class ProjectMemberMapper {
     public ProjectMemberSummaryDTO toProjectMemberSummaryDTO(ProjectMember projectMember) {
