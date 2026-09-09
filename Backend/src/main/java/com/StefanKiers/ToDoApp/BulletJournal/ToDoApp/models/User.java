@@ -24,7 +24,7 @@ public class User {
     @JsonIgnore
     @Column(name = "PASSWORD", nullable = false,  length = 64)
     private String password;
-    @Column(name = "EMAIL",  nullable = false,  length = 100, unique = false)
+    @Column(name = "EMAIL",  nullable = false,  length = 100, unique = true)
     private String email;
     @Temporal(TemporalType.DATE)
     private LocalDate dateOfBirth;
