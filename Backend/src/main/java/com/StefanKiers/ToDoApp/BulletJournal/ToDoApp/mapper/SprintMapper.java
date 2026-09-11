@@ -1,8 +1,8 @@
 package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.mapper;
 
-import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.Sprint.SprintCreateDTO;
-import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.Sprint.SprintSummaryDTO;
-import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.Sprint.SprintUpdateDTO;
+import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.sprint.SprintCreateDTO;
+import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.sprint.SprintSummaryDTO;
+import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.sprint.SprintUpdateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.models.Sprint;
 import org.springframework.stereotype.Component;
 

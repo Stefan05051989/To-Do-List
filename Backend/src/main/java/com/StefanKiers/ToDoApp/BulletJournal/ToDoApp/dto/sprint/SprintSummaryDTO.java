@@ -1,4 +1,4 @@
-package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.Sprint;
+package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.sprint;
 
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums.SprintStatus;
 
