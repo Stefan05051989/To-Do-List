@@ -25,6 +25,9 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private List<ProjectMember> projectMembers = new ArrayList<>();
+    @OneToMany(mappedBy = "project")
+    private List<Sprint> sprints = new ArrayList<>();
+
 
     public Project(){}
     public Project(String title, LocalDate deadline){
@@ -58,5 +61,13 @@ public class Project {
 
     public void setProjectMembers(List<ProjectMember> projectMembers) {
         this.projectMembers = projectMembers;
+    }
+
+    public List<Sprint> getSprints() {
+        return sprints;
+    }
+
+    public void setSprints(List<Sprint> sprints) {
+        this.sprints = sprints;
     }
 }
