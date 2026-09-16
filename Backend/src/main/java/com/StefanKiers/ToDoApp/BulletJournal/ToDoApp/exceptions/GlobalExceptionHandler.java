@@ -6,8 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.nio.file.AccessDeniedException;
+import org.springframework.security.access.AccessDeniedException;
 import java.util.List;
 
 @RestControllerAdvice
@@ -42,5 +41,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<GlobalErrorResponseDTO> handleAccessDenied(AccessDeniedException accessDeniedException){
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new GlobalErrorResponseDTO("Access denied.", List.of()));
+    }
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<GlobalErrorResponseDTO> handleIllegalState(IllegalStateException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new GlobalErrorResponseDTO(ex.getMessage(), List.of()));
     }
 }

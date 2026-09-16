@@ -1,5 +1,4 @@
 package com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.mapper;
-
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.sprint.SprintCreateDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.sprint.SprintSummaryDTO;
 import com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.dto.sprint.SprintUpdateDTO;
