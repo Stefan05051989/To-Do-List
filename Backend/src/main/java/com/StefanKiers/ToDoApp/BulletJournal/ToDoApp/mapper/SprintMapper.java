@@ -32,7 +32,7 @@ public class SprintMapper {
         sprint.setStartDate(sprintUpdateDTO.startDate());
         sprint.setEndDate(sprintUpdateDTO.endDate());
     }
-    public SprintSummaryDTO toSprintSummaryDTO(Sprint sprint){
+    public SprintSummaryDTO toSprintSummaryDTOList(Sprint sprint){
         return new SprintSummaryDTO(
                 sprint.getId(),
                 sprint.getTitle(),
@@ -43,7 +43,7 @@ public class SprintMapper {
                 sprint.getProject().getId()
         );
     }
-    public List<SprintSummaryDTO> toSprintSummaryDTO(List<Sprint> sprints){
-        return sprints.stream().map(this::toSprintSummaryDTO).toList();
+    public List<SprintSummaryDTO> toSprintSummaryDTOList(List<Sprint> sprints){
+        return sprints.stream().map(this::toSprintSummaryDTOList).toList();
     }
 }

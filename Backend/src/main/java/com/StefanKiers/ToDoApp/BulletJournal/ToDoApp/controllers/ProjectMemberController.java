@@ -30,8 +30,7 @@ public class ProjectMemberController {
     }
 
     @PostMapping
-    @PreAuthorize("@userSecurity.hasProjectRole(authentication, #projectId, T(com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums.Role).SCRUM_MASTER) " +
-                  "or @userSecurity.hasProjectRole(authentication, #projectId, T(com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums.Role).PRODUCT_OWNER)")
+    @PreAuthorize("@userSecurity.canManageSprintById(authentication, #id)")
     public ResponseEntity<ProjectMemberSummaryDTO> addMember(@PathVariable Long projectId, @RequestBody ProjectMemberAddDTO projectMemberAddDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(projectMemberService.addMember(projectId, projectMemberAddDTO.userId()));
     }

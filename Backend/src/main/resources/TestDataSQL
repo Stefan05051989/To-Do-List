@@ -1,50 +1,76 @@
--- =========================================================
--- ToDoApp testdata
--- Volgorde is belangrijk i.v.m. foreign keys:
--- users -> project -> project_member -> task_list -> task
--- =========================================================
+-- =====================================================================
+-- ToDoApp — Compleet testscript voor pgAdmin
+-- Dekt: users, project, project_member, sprint, task_list, task
+-- Wachtwoord voor ALLE users hieronder: password123
+-- =====================================================================
 
--- Users
--- id 1 = Stefan (admin), id 2 = Jan, id 3 = Piet
+-- Alles leegmaken en ID-tellers resetten, in de juiste volgorde
+-- (kinderen eerst, dan ouders, vanwege foreign keys)
+TRUNCATE TABLE task, task_list, sprint, project_member, project, users
+RESTART IDENTITY CASCADE;
+
+-- ---------------------------------------------------------------------
+-- USERS
+-- id 1 = Stefan (Admin), id 2 = Jan, id 3 = Piet, id 4 = Emma
+-- ---------------------------------------------------------------------
 INSERT INTO users (first_name, last_name, email, password, is_admin) VALUES
-('Stefan', 'Kiers', 'stefan@test.nl', '$2b$12$FFAQXFVUroAUirZjORR.nOddUzqAUkhvGypIomBHYVGJYVYYRJ3rO', true),
-('Jan', 'Jansen', 'jan@test.nl', '$2b$12$FFAQXFVUroAUirZjORR.nOddUzqAUkhvGypIomBHYVGJYVYYRJ3rO', false),
-('Piet', 'Pietersen', 'piet@test.nl', '$2b$12$FFAQXFVUroAUirZjORR.nOddUzqAUkhvGypIomBHYVGJYVYYRJ3rO', false);
+('Stefan', 'Kiers',      'stefan@test.nl', '$2b$12$y3.a6WOl7KHyFKMOMx2acen9CVmOBBggVnLxOrook9.zs6xrVPIOC', true),
+('Jan',    'Jansen',     'jan@test.nl',    '$2b$12$y3.a6WOl7KHyFKMOMx2acen9CVmOBBggVnLxOrook9.zs6xrVPIOC', false),
+('Piet',   'Pietersen',  'piet@test.nl',   '$2b$12$y3.a6WOl7KHyFKMOMx2acen9CVmOBBggVnLxOrook9.zs6xrVPIOC', false),
+('Emma',   'de Vries',   'emma@test.nl',   '$2b$12$y3.a6WOl7KHyFKMOMx2acen9CVmOBBggVnLxOrook9.zs6xrVPIOC', false);
 
--- Projects
--- id 1 = ToDoApp Ontwikkeling, id 2 = Portfolio Website, id 3 = Scrum Trainingsproject
--- (aanname: auto-increment start bij 1 op een lege tabel)
+-- ---------------------------------------------------------------------
+-- PROJECT
+-- id 1 = Website Redesign, id 2 = Interne Tool
+-- ---------------------------------------------------------------------
 INSERT INTO project (title, deadline) VALUES
-('ToDoApp Ontwikkeling', '2026-12-31'),
-('Portfolio Website', '2026-10-15'),
-('Scrum Trainingsproject', '2026-11-01');
+('Website Redesign', '2026-12-31'),
+('Interne Tool',      '2027-03-31');
 
--- Project members
--- Project 1: Stefan = Scrum Master, Jan = Developer, Piet = Client
--- Project 2: Stefan = Product Owner, Jan = Scrum Master
--- Project 3: Jan = Developer, Piet = Product Owner
+-- ---------------------------------------------------------------------
+-- PROJECT_MEMBER — koppelt users aan projects met een rol
+-- Jan = Scrum Master op project 1, Piet = Developer op project 1,
+-- Emma = Client op project 1 (kijkt alleen mee)
+-- ---------------------------------------------------------------------
 INSERT INTO project_member (project_id, user_id, role) VALUES
-(1, 1, 'SCRUM_MASTER'),
-(1, 2, 'DEVELOPER'),
-(1, 3, 'CLIENT'),
-(2, 1, 'PRODUCT_OWNER'),
-(2, 2, 'SCRUM_MASTER'),
-(3, 2, 'DEVELOPER'),
-(3, 3, 'PRODUCT_OWNER');
+(1, 2, 'SCRUM_MASTER'),
+(1, 3, 'DEVELOPER'),
+(1, 4, 'CLIENT');
 
--- Task Lists
--- id 1 = Werk (Stefan), id 2 = Studie (Stefan), id 3 = Persoonlijk (Jan), id 4 = Boodschappen (Piet)
+-- ---------------------------------------------------------------------
+-- SPRINT — hangt aan een project
+-- id 1 = Sprint 1 (actief), id 2 = Sprint 2 (gepland)
+-- ---------------------------------------------------------------------
+INSERT INTO sprint (title, description, start_date, end_date, sprint_status, project_id) VALUES
+('Sprint 1', 'Eerste sprint: basisopzet', '2026-09-01', '2026-09-14', 'ACTIVE',  1),
+('Sprint 2', 'Tweede sprint: uitbreiding', '2026-09-15', '2026-09-28', 'PLANNED', 1);
+
+-- ---------------------------------------------------------------------
+-- TASK_LIST — hangt aan een user (los van Project/Sprint, dit is de
+-- oorspronkelijke, kale to-do-lijst-structuur van Fase 0)
+-- ---------------------------------------------------------------------
 INSERT INTO task_list (title, user_id) VALUES
 ('Werk', 1),
 ('Studie', 1),
-('Persoonlijk', 2),
-('Boodschappen', 3);
+('Persoonlijk', 2);
 
--- Tasks
+-- ---------------------------------------------------------------------
+-- TASK — hangt aan een task_list en een user
+-- ---------------------------------------------------------------------
 INSERT INTO task (title, content, task_list_id, status, user_id, migration_count, created_at) VALUES
-('Backend afmaken', 'Spring Boot API compleet maken', 1, 'IN_PROGRESS', 1, 0, CURRENT_DATE),
-('Frontend bouwen', 'React components maken', 1, 'CREATED', 1, 0, CURRENT_DATE),
-('TypeScript leren', 'Cursus volgen', 2, 'IN_PROGRESS', 1, 0, CURRENT_DATE),
-('React Query oefenen', 'useMutation implementeren', 2, 'CREATED', 1, 0, CURRENT_DATE),
-('Boodschappen doen', 'Melk, brood, kaas', 4, 'CREATED', 3, 0, CURRENT_DATE),
-('Sportschool', 'Maandag en woensdag', 3, 'DONE', 2, 0, CURRENT_DATE);
+('Backend afmaken',   'Spring Boot API compleet maken', 1, 'IN_PROGRESS', 1, 0, CURRENT_DATE),
+('Frontend bouwen',   'React components maken',         1, 'CREATED',     1, 0, CURRENT_DATE),
+('Sprint 1 afronden', 'Alle taken van sprint 1 checken', 2, 'CREATED',     1, 0, CURRENT_DATE);
+
+-- =====================================================================
+-- Verificatie — draai deze losse SELECT's om te checken of alles klopt
+-- =====================================================================
+-- SELECT * FROM users;
+-- SELECT * FROM project;
+-- SELECT pm.id, p.title AS project, u.first_name, pm.role
+--   FROM project_member pm
+--   JOIN project p ON p.id = pm.project_id
+--   JOIN users u ON u.id = pm.user_id;
+-- SELECT * FROM sprint;
+-- SELECT * FROM task_list;
+-- SELECT * FROM task;

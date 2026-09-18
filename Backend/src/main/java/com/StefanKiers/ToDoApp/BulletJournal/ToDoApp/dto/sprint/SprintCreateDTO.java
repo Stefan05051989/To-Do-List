@@ -14,7 +14,6 @@ public record SprintCreateDTO(
         String title,
         String description,
         LocalDate startDate,
-        LocalDate endDate,
-        Long projectId
+        LocalDate endDate
 ) {
 }

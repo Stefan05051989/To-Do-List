@@ -29,7 +29,7 @@ public class ProjectController {
     }
 
     @PostMapping
-//    @PreAuthorize("@userSecurity.isAdmin(authentication)")
+    @PreAuthorize("@userSecurity.isAdmin(authentication)")
     public ResponseEntity<ProjectSummaryDTO> createProject(@RequestBody ProjectCreateDTO projectCreateDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.createProject(projectCreateDTO));
     }
@@ -41,9 +41,8 @@ public class ProjectController {
     public ResponseEntity<ProjectSummaryDTO> getProjectById(@PathVariable Long id) {
         return ResponseEntity.ok(projectService.getProjectById(id));
     }
-    @PostMapping("/{id}")
-    @PreAuthorize("@userSecurity.hasProjectRole(authentication, #id, T(com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums.Role).SCRUM_MASTER) " +
-    "or @userSecurity.hasProjectRole(authentication, #id, T(com.StefanKiers.ToDoApp.BulletJournal.ToDoApp.enums.Role).PRODUCT_OWNER)")
+    @PutMapping("/{id}")
+    @PreAuthorize("@userSecurity.canManageSprintById(authentication, #id)")
     public ResponseEntity<ProjectSummaryDTO> updateProject(@PathVariable Long id, @RequestBody ProjectUpdateDTO projectUpdateDTO) {
         return ResponseEntity.ok(projectService.updateProject(id, projectUpdateDTO));
     }

@@ -35,29 +35,39 @@ public class SprintService {
         this.projectRepository = projectRepository;
         this.sprintMapper = sprintMapper;
     }
-    public SprintSummaryDTO createSprint(SprintCreateDTO sprintCreateDTO) {
-        Project project = projectRepository.findById(sprintCreateDTO.projectId())
-                .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
+
+    public SprintSummaryDTO createSprint(Long projectId, SprintCreateDTO sprintCreateDTO) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("Project Not Found"));
         Sprint sprint = sprintMapper.toEntity(sprintCreateDTO);
         sprint.setProject(project);
-        return sprintMapper.toSprintSummaryDTO(sprintRepository.save(sprint));
+        return sprintMapper.toSprintSummaryDTOList(sprintRepository.save(sprint));
     }
+
+
+
     public List<SprintSummaryDTO> getSprintsProjectById(Long projectId) {
         if (!projectRepository.existsById(projectId)) {
             throw new ResourceNotFoundException("Project not found");
         }
-        return sprintMapper.toSprintSummaryDTO(sprintRepository.findByProjectId(projectId));
+        return sprintMapper.toSprintSummaryDTOList(sprintRepository.findByProjectId(projectId));
     }
+
+
+
     public SprintSummaryDTO getSprintById(Long id) {
         Sprint sprint =  sprintRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Sprint not found"));
-        return sprintMapper.toSprintSummaryDTO(sprint);
+        return sprintMapper.toSprintSummaryDTOList(sprint);
     }
+
+
+
     public SprintSummaryDTO updateSprint(Long id, SprintUpdateDTO sprintUpdateDTO) {
         Sprint sprint = sprintRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Sprint not found"));
         sprintMapper.updateEntity(sprint, sprintUpdateDTO);
-        return sprintMapper.toSprintSummaryDTO(sprintRepository.save(sprint));
+        return sprintMapper.toSprintSummaryDTOList(sprintRepository.save(sprint));
     }
     public SprintSummaryDTO cancelSprint(Long id) {
         Sprint sprint = sprintRepository.findById(id)
@@ -69,7 +79,7 @@ public class SprintService {
             throw new IllegalStateException("Sprint is already cancelled");
         }
         sprint.setSprintStatus(SprintStatus.CANCELLED);
-        return sprintMapper.toSprintSummaryDTO(sprintRepository.save(sprint));
+        return sprintMapper.toSprintSummaryDTOList(sprintRepository.save(sprint));
     }
     public void deleteSprint(Long id) {
         if (!sprintRepository.existsById(id)) {
